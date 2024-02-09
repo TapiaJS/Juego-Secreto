@@ -6,7 +6,8 @@ Se puede utilizar un método en cualquier momento en javaScript y en HTML única
 let numeroSecreto = 0; //Variable de alcanze global
 let intentos = 0;
 let listaNumerosSorteados = [];
-let numeroMaximo = 10;
+let numeroMaximo = 3;
+let activador = 0;
 
 function asignarTextoElemento(elemento, texto) {
     let elementoHTML = document.querySelector(elemento);
@@ -46,18 +47,19 @@ function cleanInput() {
 }
 
 function generarNumeroSecreto() {
-    let numeroGenerado = Math.floor(Math.random()*10+1);//Variable de alcance de bloque 
+    let numeroGenerado = Math.floor(Math.random()*numeroMaximo+1);//Variable de alcance de bloque 
     console.log("El tipo del número generado es: " + typeof(numeroGenerado) + ` (${numeroGenerado})`);
-    console.log(listaNumerosSorteados);
-
+    
     if (listaNumerosSorteados.length == numeroMaximo) {
         asignarTextoElemento("p",`Ya se sortearon todos los números posibles`);
         document.querySelector("#intentar").setAttribute("disabled", "true");
+        activador = 1;
     } else {
         if (listaNumerosSorteados.includes(numeroGenerado)) {
             return generarNumeroSecreto();
         } else {
             listaNumerosSorteados.push(numeroGenerado);
+            console.log(listaNumerosSorteados);
             return numeroGenerado;
         }
     }
@@ -75,7 +77,9 @@ function reiniciarJuego() {
     cleanInput();
     condicionesIniciales();
     document.querySelector("#reiniciar").setAttribute("disabled", "true");
-    document.querySelector("#intentar").removeAttribute("disabled");
+    if (activador != 1) {
+        document.querySelector("#intentar").removeAttribute("disabled");
+    }
     return;
 }
 
