@@ -18,7 +18,7 @@ function verificarIntento() {
     let numeroDeUsuario = parseInt(document.getElementById("valorDeUsuario").value); //Si no se utiliza el parseInt el valor ingresado es String
     console.log(numeroDeUsuario === numeroSecreto);//El triple igual es estricto en cuanto el tipo de dato que se compara por lo que deben de ser del mismo tipo los elmentos
     
-    if (intentos == 3) {
+    if (intentos == 3 && numeroDeUsuario != numeroSecreto) {
         asignarTextoElemento("p", "Perdiste, la cantidad máxima de intentos es 3")
         document.querySelector("#intentar").setAttribute("disabled", "true");
         cleanInput();
@@ -26,6 +26,7 @@ function verificarIntento() {
         if (numeroDeUsuario === numeroSecreto) {
             asignarTextoElemento("p", `Acertaste el número en ${intentos} ${(intentos === 1) ? "vez" : "veces" }`);
             document.getElementById("reiniciar").removeAttribute("disabled");
+            document.querySelector("#intentar").setAttribute("disabled", "true");
         } else {
             if (numeroDeUsuario > numeroSecreto) {
                 asignarTextoElemento('p', 'El número secreto es menor');
@@ -74,6 +75,7 @@ function reiniciarJuego() {
     cleanInput();
     condicionesIniciales();
     document.querySelector("#reiniciar").setAttribute("disabled", "true");
+    document.querySelector("#intentar").removeAttribute("disabled");
     return;
 }
 
